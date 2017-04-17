@@ -54,44 +54,50 @@
                     <input id="sort" ng-model="sortType" />
                 </div>
                 <div class="col-xs-12">
-                    <blockquote ng-repeat="comment in dish.comments | orderBy: sortType">
-                        <p>{{comment.rating}} Stars</p>
-                        <p>{{comment.comment}}</p>
-                        <footer>{{comment.author}} {{comment.date | date}}</footer>
-                    </blockquote>
+                    <ul class="list-unstyled">
+                        <li ng-repeat="comment in dish.comments | orderBy: sortType">
+                            <blockquote>
+                                <p>{{comment.rating}} Stars</p>
+                                <p>{{comment.comment}}</p>
+                                <footer>{{comment.author}} {{comment.date | date}}</footer>
+                            </blockquote>
+                        </li>
+                    </ul>
 
                     <form class="form-horizontal" ng-controller="DishCommentController" name="commentForm" role="form" ng-submit="submitComment()"
                         novalidate>
-                        <blockquote ng-show="!commentForm.$invalid && (!commentForm.author.$pristine || !commentForm.comment.$pristine)">
-                            <p>{{comment.rating}} Stars (preview)</p>
-                            <p>{{comment.comment}}</p>
-                            <footer>{{comment.author}} {{comment.date | date}}</footer>
-                        </blockquote>
+                        <ul class="list-unstyled" ng-show="!commentForm.$invalid && (!commentForm.author.$pristine || !commentForm.comment.$pristine)">
+                            <li>
+                                <blockquote>
+                                    <p>{{comment.rating}} Stars (preview)</p>
+                                    <p>{{comment.comment}}</p>
+                                    <footer>{{comment.author}} {{comment.date | date}}</footer>
+                                </blockquote>
+                            </li>
+                        </ul>
 
                         <div class="form-group" ng-class="{ 'has-error' : commentForm.author.$error.required && !commentForm.author.$pristine }">
                             <label for="name" class="col-sm-3 control-label">Your Name</label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" id="author" name="author" placeholder="Enter First Name" ng-model="comment.author"
                                     required>
+                                <span ng-show="commentForm.author.$error.required && !commentForm.author.$pristine" class="help-block">Your name is required.</span>
                             </div>
-                            <span ng-show="commentForm.author.$error.required && !commentForm.author.$pristine" class="help-block">Your name is required.</span>
                         </div>
                         <div class="form-group">
                             <label for="rating" class="col-sm-3 control-label">Number of Stars</label>
                             <div class="col-sm-9">
-                                <label class="radio-inline"><input type="radio" name="rating" value="1" ng-model="comment.rating">1</label>
-                                <label class="radio-inline"><input type="radio" name="rating" value="2" ng-model="comment.rating">2</label>
-                                <label class="radio-inline"><input type="radio" name="rating" value="3" ng-model="comment.rating">3</label>
-                                <label class="radio-inline"><input type="radio" name="rating" value="4" ng-model="comment.rating">4</label>
-                                <label class="radio-inline"><input type="radio" name="rating" value="5" ng-model="comment.rating">5</label>
+                                <label class="radio-inline" ng-repeat="rating in ratings">
+                                    <input type="radio" name="rating" ng-value="rating" ng-model="comment.rating">{{rating}}
+                                </label>
                             </div>
                         </div>
                         <div class="form-group" ng-class="{ 'has-error' : commentForm.comment.$error.required && !commentForm.comment.$pristine }">
                             <label for="feedback" class="col-sm-3 control-label">Your Comments</label>
                             <div class="col-sm-9">
                                 <textarea class="form-control" id="comment" name="comment" rows="12" ng-model="comment.comment" required></textarea>
+                                <span ng-show="commentForm.comment.$error.required && !commentForm.comment.$pristine" class="help-block">Your comments are required</span>
                             </div>
-                            <span ng-show="commentForm.comment.$error.required && !commentForm.comment.$pristine" class="help-block">Your comments are required</span>
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-3 col-sm-9">
@@ -107,6 +113,8 @@
         <!-- build:js scripts/main.js -->
         <script src="../bower_components/angular/angular.min.js"></script>
         <script src="scripts/app.js"></script>
+        <script src="scripts/controllers.js"></script>
+        <script src="scripts/services.js"></script>
         <!-- endbuild -->
 
 </body>
