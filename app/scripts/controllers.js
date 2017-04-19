@@ -54,7 +54,7 @@ angular.module('confusionApp')
 			console.log($scope.feedback);
 
 			if ($scope.feedback.agree &&
-				($scope.feedback.mychannel == "")) {
+				($scope.feedback.mychannel === "")) {
 				$scope.invalidChannelSelection = true;
 				console.log('incorrect');
 			} else {
@@ -95,5 +95,5 @@ angular.module('confusionApp')
 
 			//Step 5: reset your JavaScript object that holds your comment
 			$scope.comment = { author: "", rating: "5", comment: "" };
-		}
+		};
 	}]);
