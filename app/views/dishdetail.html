@@ -43,9 +43,9 @@
                     <ul class="list-unstyled" ng-show="!commentForm.$invalid && (!commentForm.author.$pristine || !commentForm.comment.$pristine)">
                         <li>
                             <blockquote>
-                                <p>{{comment.rating}} Stars (preview)</p>
-                                <p>{{comment.comment}}</p>
-                                <footer>{{comment.author}} {{comment.date | date}}</footer>
+                                <p>{{mycomment.rating}} Stars (preview)</p>
+                                <p>{{mycomment.comment}}</p>
+                                <footer>{{mycomment.author}} {{mycomment.date | date}}</footer>
                             </blockquote>
                         </li>
                     </ul>
@@ -53,7 +53,7 @@
                     <div class="form-group" ng-class="{ 'has-error' : commentForm.author.$error.required && !commentForm.author.$pristine }">
                         <label for="name" class="col-sm-3 control-label">Your Name</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="author" name="author" placeholder="Enter First Name" ng-model="comment.author"
+                            <input type="text" class="form-control" id="author" name="author" placeholder="Enter First Name" ng-model="mycomment.author"
                                 required>
                             <span ng-show="commentForm.author.$error.required && !commentForm.author.$pristine" class="help-block">Your name is required.</span>
                         </div>
@@ -62,14 +62,14 @@
                         <label for="rating" class="col-sm-3 control-label">Number of Stars</label>
                         <div class="col-sm-9">
                             <label class="radio-inline" ng-repeat="rating in ratings">
-                                    <input type="radio" name="rating" ng-value="rating" ng-model="comment.rating">{{rating}}
+                                    <input type="radio" name="rating" ng-value="rating" ng-model="mycomment.rating">{{rating}}
                                 </label>
                         </div>
                     </div>
                     <div class="form-group" ng-class="{ 'has-error' : commentForm.comment.$error.required && !commentForm.comment.$pristine }">
                         <label for="feedback" class="col-sm-3 control-label">Your Comments</label>
                         <div class="col-sm-9">
-                            <textarea class="form-control" id="comment" name="comment" rows="12" ng-model="comment.comment" required></textarea>
+                            <textarea class="form-control" id="comment" name="comment" rows="12" ng-model="mycomment.comment" required></textarea>
                             <span ng-show="commentForm.comment.$error.required && !commentForm.comment.$pristine" class="help-block">Your comments are required</span>
                         </div>
                     </div>
