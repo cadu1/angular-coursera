@@ -8,7 +8,11 @@ angular.module('confusionApp')
         $scope.filtText = '';
         $scope.showDetails = false;
 
-        $scope.dishes = menuFactory.getDishes();
+        $scope.dishes = [];
+        menuFactory.getDishes()
+            .then(function (response) {
+                $scope.dishes = response.data;
+            });
 
 
         $scope.select = function (setTab) {
@@ -52,9 +56,7 @@ angular.module('confusionApp')
 
         $scope.sendFeedback = function () {
 
-            console.log($scope.feedback);
-
-            if ($scope.feedback.agree && ($scope.feedback.mychannel == "")) {
+            if ($scope.feedback.agree && ($scope.feedback.mychannel === "")) {
                 $scope.invalidChannelSelection = true;
                 console.log('incorrect');
             }
@@ -63,14 +65,17 @@ angular.module('confusionApp')
                 $scope.feedback = { mychannel: "", firstName: "", lastName: "", agree: false, email: "" };
                 $scope.feedback.mychannel = "";
                 $scope.feedbackForm.$setPristine();
-                console.log($scope.feedback);
             }
         };
     }])
 
     .controller('DishDetailController', ['$scope', '$stateParams', 'menuFactory', function ($scope, $stateParams, menuFactory) {
-        var dish = menuFactory.getDish(parseInt($stateParams.id, 10));
-        $scope.dish = dish;
+        $scope.dish = {};
+        menuFactory.getDish(parseInt($stateParams.id, 10))
+            .then(function (response) {
+                $scope.dish = response.data;
+                $scope.showDish = true;
+            });
     }])
 
     .controller('DishCommentController', ['$scope', function ($scope) {
@@ -80,14 +85,13 @@ angular.module('confusionApp')
         $scope.submitComment = function () {
 
             $scope.mycomment.date = new Date().toISOString();
-            console.log($scope.mycomment);
 
             $scope.dish.comments.push($scope.mycomment);
 
             $scope.commentForm.$setPristine();
 
             $scope.mycomment = { rating: 5, comment: "", author: "", date: "" };
-        }
+        };
     }])
 
     // implement the IndexController and About Controller here
@@ -95,8 +99,12 @@ angular.module('confusionApp')
         var promotion = menuFactory.getPromotion(0);
         $scope.promotion = promotion;
 
-        var dish = menuFactory.getDish(0);
-        $scope.dish = dish;
+        $scope.dish = {};
+        menuFactory.getDish(0)
+            .then(function (response) {
+                $scope.dish = response.data;
+                $scope.showDish = true;
+            });
 
         var leader = corporateFactory.getLeader(3);
         $scope.leader = leader;
