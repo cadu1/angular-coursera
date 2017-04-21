@@ -7,9 +7,18 @@ angular.module('confusionApp')
         $scope.tab = 1;
         $scope.filtText = '';
         $scope.showDetails = false;
-        $scope.showMenu = true;
+        $scope.showMenu = false;
         $scope.message = "Loading ...";
-        $scope.dishes = menuFactory.getDishes().query();
+        $scope.dishes = [];
+        menuFactory.getDishes().query(
+            function (success) {
+                $scope.dishes = success;
+                $scope.showMenu = true;
+            },
+            function (err) {
+                $scope.message = "Error: " + err.status + " " + err.statusText;
+            }
+        );
 
         $scope.select = function (setTab) {
             $scope.tab = setTab;
@@ -66,12 +75,22 @@ angular.module('confusionApp')
     }])
 
     .controller('DishDetailController', ['$scope', '$stateParams', 'menuFactory', function ($scope, $stateParams, menuFactory) {
-        $scope.showDish = true;
+        $scope.showDish = false;
         $scope.message = "Loading ...";
-        $scope.dish = menuFactory.getDishes().get({ id: parseInt($stateParams.id, 10) });
+        $scope.dish = {};
+        menuFactory.getDishes()
+            .get({ id: parseInt($stateParams.id, 10) })
+            .$promise.then(
+            function (success) {
+                $scope.showDish = true;
+                $scope.dish = success;
+            },
+            function (err) {
+                $scope.message = "Error: " + err.status + " " + err.statusText;
+            });
     }])
 
-    .controller('DishCommentController', ['$scope', function ($scope) {
+    .controller('DishCommentController', ['$scope', 'menuFactory', function ($scope, menuFactory) {
         $scope.ratings = [1, 2, 3, 4, 5];
         $scope.mycomment = { rating: 5, comment: "", author: "", date: "" };
 
@@ -80,6 +99,8 @@ angular.module('confusionApp')
             $scope.mycomment.date = new Date().toISOString();
 
             $scope.dish.comments.push($scope.mycomment);
+
+            menuFactory.getDishes().update({ id: $scope.dish.id }, $scope.dish);
 
             $scope.commentForm.$setPristine();
 
@@ -92,9 +113,19 @@ angular.module('confusionApp')
         var promotion = menuFactory.getPromotion(0);
         $scope.promotion = promotion;
 
-        $scope.showDish = true;
+        $scope.showDish = false;
         $scope.message = "Loading ...";
-        $scope.dish = menuFactory.getDishes().get({ id: 0 });
+        $scope.dish = {};
+        menuFactory.getDishes()
+            .get({ id: 0 })
+            .$promise.then(
+            function (success) {
+                $scope.dish = success;
+                $scope.showDish = true;
+            },
+            function (err) {
+                $scope.message = "Error: " + err.status + " " + err.statusText;
+            });
 
         var leader = corporateFactory.getLeader(3);
         $scope.leader = leader;
