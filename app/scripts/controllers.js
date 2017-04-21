@@ -7,11 +7,16 @@ angular.module('confusionApp')
         $scope.tab = 1;
         $scope.filtText = '';
         $scope.showDetails = false;
-
+        $scope.showMenu = false;
+        $scope.message = "Loading ...";
         $scope.dishes = [];
+
         menuFactory.getDishes()
-            .then(function (response) {
-                $scope.dishes = response.data;
+            .then(function (success) {
+                $scope.dishes = success.data;
+                $scope.showMenu = true;
+            }, function (err) {
+                $scope.message = "Error: " + err.status + " " + err.statusText;
             });
 
 
@@ -71,10 +76,15 @@ angular.module('confusionApp')
 
     .controller('DishDetailController', ['$scope', '$stateParams', 'menuFactory', function ($scope, $stateParams, menuFactory) {
         $scope.dish = {};
+        $scope.showDish = false;
+        $scope.message = "Loading ...";
         menuFactory.getDish(parseInt($stateParams.id, 10))
-            .then(function (response) {
-                $scope.dish = response.data;
+            .then(function (success) {
+                $scope.dish = success.data;
                 $scope.showDish = true;
+            },
+            function (err) {
+                $scope.message = "Error: " + err.status + " " + err.statusText;
             });
     }])
 
@@ -100,10 +110,15 @@ angular.module('confusionApp')
         $scope.promotion = promotion;
 
         $scope.dish = {};
+        $scope.showDish = false;
+        $scope.message = "Loading ...";
         menuFactory.getDish(0)
-            .then(function (response) {
-                $scope.dish = response.data;
+            .then(function (success) {
+                $scope.dish = success.data;
                 $scope.showDish = true;
+            },
+            function (err) {
+                $scope.message = "Error: " + err.status + " " + err.statusText;
             });
 
         var leader = corporateFactory.getLeader(3);
