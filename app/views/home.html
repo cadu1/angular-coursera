@@ -8,17 +8,18 @@
             <div ng-if="!showDish">
                 <h3>{{message}}</h3>
             </div>
-            <li class="media" ng-if="showDish">
-                <div class="media-left media-middle">
-                    <a href="#">
-                        <img class="media-object img-thumbnail" src="{{dish.image}}" alt="{{dish.name}}">
-                    </a>
-                </div>
-                <div class="media-body">
-                    <h2 class="media-heading">{{dish.name}} <span class="label label-danger">{{dish.label}}</span> <span class="badge">{{dish.price | currency}}</span></h2>
-                    <p>{{dish.description}}</p>
-                </div>
-            </li>
+            <ul class="media-list" ng-if="showDish">
+                <li class="media">
+                    <div class="media-left media-middle">
+                        <a href="#">
+                            <img class="media-object img-thumbnail" src="{{dish.image}}" alt="{{dish.name}}">
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <h2 class="media-heading">{{dish.name}} <span class="label label-danger">{{dish.label}}</span> <span class="badge">{{dish.price | currency}}</span></h2>
+                        <p>{{dish.description}}</p>
+                    </div>
+                </li>
             </ul>
         </div>
     </div>
