@@ -1,5 +1,5 @@
 {
-  "name": "conFusion",
+  "name": "confusion",
   "private": true,
   "devDependencies": {
     "browser-sync": "^2.18.8",
@@ -28,10 +28,14 @@
     "gulp-rev": "^7.1.2",
     "gulp-uglify": "^2.1.2",
     "gulp-usemin": "^0.3.28",
+    "jasmine-core": "^2.6.0",
     "jit-grunt": "^0.10.0",
     "jshint": "^2.9.4",
     "jshint-stylish": "^2.2.1",
-    "time-grunt": "^1.4.0"
+    "karma-chrome-launcher": "^2.0.0",
+    "karma-jasmine": "^1.1.0",
+    "karma-phantomjs-launcher": "^1.0.4",
+    "phantomjs": "^2.1.7"
   },
   "engines": {
     "node": ">=0.10.0"
