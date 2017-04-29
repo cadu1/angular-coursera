@@ -30,7 +30,10 @@
             <h3 align=center>This Month's Promotions</h3>
         </div>
         <div class="col-xs-12 col-sm-9">
-            <ul class="media-list">
+            <div ng-if="!showPromo">
+                <h3>{{promoMsg}}</h3>
+            </div>
+            <ul class="media-list" ng-if="showPromo">
                 <li class="media">
                     <div class="media-body">
                         <h2>{{promotion.name}} <span class="label label-danger">{{promotion.label}}</span> <span class="badge">{{promotion.price | currency}}</span></h2>
@@ -52,7 +55,10 @@
             <h3 align=center>Meet our Culinary Specialists</h3>
         </div>
         <div class="col-xs-12 col-sm-9 col-sm-pull-3">
-            <ul class="media-list">
+            <div ng-if="!showLeader">
+                <h3>{{leaderMsg}}</h3>
+            </div>
+            <ul class="media-list" ng-if="showLeader">
                 <li class="media">
                     <div class="media-left media-middle">
                         <a href="#">
